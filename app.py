@@ -75,7 +75,7 @@ contextualize = ChatPromptTemplate.from_messages([
     ("system",
      "You are a question-rewriting assistant.  Given the **chat history** and the latest user query, "
      "rewrite the query as a single, self-contained question.  "
-     "Do NOT answer—only restate it clearly as if the history were not available."
+     "Do NOT answer — only restate it clearly as if the history were not available."
      ),
     MessagesPlaceholder("chat_history"),
     ("human", "{input}")
@@ -83,8 +83,9 @@ contextualize = ChatPromptTemplate.from_messages([
 history_aware = create_history_aware_retriever(llm, retriever, contextualize)
 
 qa_system = (
-    "You are a factual assistant.  **Only** use the following retrieved passages—do NOT rely on any outside knowledge.  "
-    "Cite the source filenames when you quote or refer to them.  If you cannot find the answer in the context, say “I don't know” and do NOT guess."
+    "You are an AI assistant. use the following retrieved passages"
+    "Check for answer in retrieved documents first. If not found, you can use your knowledge to answer."
+    "If you need more context information, then ask user but don't hallucinate/guess"
     "Keep your answer under three sentences.\n\n"
     "{context}"
 )
